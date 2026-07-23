@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Compress, convert, resize, and clean image metadata directly in your browser."
+    >
+
+    <title>ImageTools | Fast and Private Image Utilities</title>
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="js/app.js" defer></script>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container header-container">
+
+            <a href="index.html" class="brand" aria-label="ImageTools homepage">
+                <span class="brand-icon" aria-hidden="true">◈</span>
+                <span class="brand-name">ImageTools</span>
+            </a>
+
+            <nav class="desktop-navigation" aria-label="Main navigation">
+                <a href="#tools">Tools</a>
+                <a href="#features">Features</a>
+                <a href="#privacy">Privacy</a>
+
+                <a
+                    href="https://github.com/DileepKumar52/ImageTools"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    GitHub
+                </a>
+            </nav>
+
+            <div class="header-actions">
+                <button
+                    type="button"
+                    class="theme-toggle"
+                    id="themeToggle"
+                    aria-label="Switch theme"
+                    title="Switch theme"
+                >
+                    <span id="themeIcon" aria-hidden="true">☾</span>
+                </button>
+
+                <button
+                    type="button"
+                    class="mobile-menu-button"
+                    id="mobileMenuButton"
+                    aria-label="Open navigation menu"
+                    aria-expanded="false"
+                    aria-controls="mobileNavigation"
+                >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+
+        </div>
+
+        <nav
+            class="mobile-navigation"
+            id="mobileNavigation"
+            aria-label="Mobile navigation"
+        >
+            <a href="#tools">Tools</a>
+            <a href="#features">Features</a>
+            <a href="#privacy">Privacy</a>
+
+            <a
+                href="https://github.com/DileepKumar52/ImageTools"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                GitHub
+            </a>
+        </nav>
+    </header>
+
+
+    <!-- Main Content -->
+    <main>
+
+        <!-- Hero Section -->
+        <section class="hero-section">
+            <div class="container hero-container">
+
+                <div class="hero-badge">
+                    <span class="badge-dot" aria-hidden="true"></span>
+                    Browser-based image processing
+                </div>
+
+                <h1>
+                    Fast, private image tools
+                    <span>in your browser</span>
+                </h1>
+
+                <p class="hero-description">
+                    Compress, convert, resize, and clean images without
+                    uploading them to a server.
+                </p>
+
+                <div class="hero-actions">
+                    <button
+                        type="button"
+                        class="button button-primary"
+                        id="heroUploadButton"
+                    >
+                        Choose an image
+                    </button>
+
+                    <a href="#tools" class="button button-secondary">
+                        Explore tools
+                    </a>
+                </div>
+
+                <div class="hero-benefits" aria-label="ImageTools benefits">
+                    <span>Private processing</span>
+                    <span>No account required</span>
+                    <span>Free to use</span>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- Upload Section -->
+        <section class="upload-section" aria-labelledby="uploadTitle">
+            <div class="container">
+
+                <div
+                    class="upload-zone"
+                    id="uploadZone"
+                    tabindex="0"
+                    role="button"
+                    aria-label="Upload an image by clicking or dragging a file here"
+                >
+
+                    <input
+                        type="file"
+                        id="imageInput"
+                        accept="image/jpeg,image/png,image/webp"
+                        hidden
+                    >
+
+                    <div class="upload-icon" aria-hidden="true">
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="36"
+                            height="36"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M12 16V4M12 4L7.5 8.5M12 4L16.5 8.5"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+
+                            <path
+                                d="M5 14V18C5 19.1046 5.89543 20 7 20H17C18.1046 20 19 19.1046 19 18V14"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                    </div>
+
+                    <div class="upload-content">
+                        <h2 id="uploadTitle">Drop your image here</h2>
+
+                        <p>
+                            Drag and drop an image or
+                            <button
+                                type="button"
+                                class="browse-button"
+                                id="browseButton"
+                            >
+                                browse files
+                            </button>
+                        </p>
+
+                        <span class="supported-formats">
+                            Supports JPG, PNG, and WebP
+                        </span>
+                    </div>
+
+                    <div class="privacy-message" id="privacy">
+                        <span aria-hidden="true">●</span>
+                        Your image stays on your device
+                    </div>
+
+                </div>
+
+
+                <!-- Selected File Information -->
+                <div
+                    class="selected-file"
+                    id="selectedFile"
+                    hidden
+                    aria-live="polite"
+                >
+                    <div class="selected-file-preview">
+                        <img
+                            src=""
+                            alt="Selected image preview"
+                            id="selectedImagePreview"
+                        >
+                    </div>
+
+                    <div class="selected-file-details">
+                        <span class="selected-file-label">Selected image</span>
+
+                        <strong id="selectedFileName"></strong>
+
+                        <span id="selectedFileInformation"></span>
+                    </div>
+
+                    <div class="selected-file-actions">
+                        <a
+                            href="pages/compressor.html"
+                            class="button button-primary"
+                            id="continueButton"
+                        >
+                            Continue to compressor
+                        </a>
+
+                        <button
+                            type="button"
+                            class="remove-file-button"
+                            id="removeFileButton"
+                        >
+                            Remove
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- Popular Tools Preview -->
+        <section class="tools-section" id="tools">
+            <div class="container">
+
+                <div class="section-heading">
+                    <span>Popular tools</span>
+
+                    <h2>Everything you need for everyday images</h2>
+
+                    <p>
+                        Simple browser-based tools designed for speed,
+                        privacy, and clear results.
+                    </p>
+                </div>
+
+                <div class="tool-grid">
+
+                    <a href="pages/compressor.html" class="tool-card">
+                        <div class="tool-card-icon" aria-hidden="true">↘</div>
+
+                        <div>
+                            <h3>Image Compressor</h3>
+                            <p>
+                                Reduce image file size while maintaining
+                                visual quality.
+                            </p>
+                        </div>
+
+                        <span class="tool-card-link">Open tool →</span>
+                    </a>
+
+                    <a href="pages/converter.html" class="tool-card">
+                        <div class="tool-card-icon" aria-hidden="true">⇄</div>
+
+                        <div>
+                            <h3>Image Converter</h3>
+                            <p>
+                                Convert images between JPG, PNG, and
+                                WebP formats.
+                            </p>
+                        </div>
+
+                        <span class="tool-card-link">Open tool →</span>
+                    </a>
+
+                    <a href="pages/resizer.html" class="tool-card">
+                        <div class="tool-card-icon" aria-hidden="true">↗</div>
+
+                        <div>
+                            <h3>Image Resizer</h3>
+                            <p>
+                                Resize images using custom dimensions
+                                or useful presets.
+                            </p>
+                        </div>
+
+                        <span class="tool-card-link">Open tool →</span>
+                    </a>
+
+                    <a href="pages/metadata.html" class="tool-card">
+                        <div class="tool-card-icon" aria-hidden="true">⌁</div>
+
+                        <div>
+                            <h3>Metadata Cleaner</h3>
+                            <p>
+                                View and remove hidden EXIF information
+                                from images.
+                            </p>
+                        </div>
+
+                        <span class="tool-card-link">Open tool →</span>
+                    </a>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- Features Preview -->
+        <section class="features-section" id="features">
+            <div class="container features-grid">
+
+                <article class="feature-item">
+                    <span class="feature-number">01</span>
+                    <h3>Private</h3>
+                    <p>
+                        Files are processed locally whenever the selected
+                        tool supports browser-side processing.
+                    </p>
+                </article>
+
+                <article class="feature-item">
+                    <span class="feature-number">02</span>
+                    <h3>Fast</h3>
+                    <p>
+                        Avoid unnecessary uploads, queues, and account
+                        creation before using a basic utility.
+                    </p>
+                </article>
+
+                <article class="feature-item">
+                    <span class="feature-number">03</span>
+                    <h3>Simple</h3>
+                    <p>
+                        Clear controls and focused tools without
+                        distracting settings or confusing workflows.
+                    </p>
+                </article>
+
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-container">
+
+            <a href="index.html" class="brand footer-brand">
+                <span class="brand-icon" aria-hidden="true">◈</span>
+                <span class="brand-name">ImageTools</span>
+            </a>
+
+            <p>
+                Fast and private image utilities for everyday use.
+            </p>
+
+            <div class="footer-links">
+                <a href="#tools">Tools</a>
+                <a href="#privacy">Privacy</a>
+
+                <a
+                    href="https://github.com/DileepKumar52/ImageTools"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    GitHub
+                </a>
+            </div>
+
+            <span class="copyright">
+                © <span id="currentYear">2026</span> ImageTools
+            </span>
+
+        </div>
+    </footer>
+
+</body>
+</html>

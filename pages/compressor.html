@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Compress JPG, PNG, and WebP images directly in your browser with ImageTools."
+    >
+
+    <title>Image Compressor | ImageTools</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <script src="../js/compressor.js" defer></script>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container header-container">
+
+            <a
+                href="../index.html"
+                class="brand"
+                aria-label="ImageTools homepage"
+            >
+                <span class="brand-icon" aria-hidden="true">◈</span>
+                <span class="brand-name">ImageTools</span>
+            </a>
+
+            <nav class="desktop-navigation" aria-label="Main navigation">
+                <a href="../index.html#tools">Tools</a>
+                <a href="../index.html#features">Features</a>
+                <a href="../index.html#privacy">Privacy</a>
+
+                <a
+                    href="https://github.com/DileepKumar52/ImageTools"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    GitHub
+                </a>
+            </nav>
+
+            <div class="header-actions">
+                <button
+                    type="button"
+                    class="theme-toggle"
+                    id="themeToggle"
+                    aria-label="Switch theme"
+                    title="Switch theme"
+                >
+                    <span id="themeIcon" aria-hidden="true">☾</span>
+                </button>
+
+                <button
+                    type="button"
+                    class="mobile-menu-button"
+                    id="mobileMenuButton"
+                    aria-label="Open navigation menu"
+                    aria-expanded="false"
+                    aria-controls="mobileNavigation"
+                >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+
+        </div>
+
+        <nav
+            class="mobile-navigation"
+            id="mobileNavigation"
+            aria-label="Mobile navigation"
+        >
+            <a href="../index.html#tools">Tools</a>
+            <a href="../index.html#features">Features</a>
+            <a href="../index.html#privacy">Privacy</a>
+
+            <a
+                href="https://github.com/DileepKumar52/ImageTools"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                GitHub
+            </a>
+        </nav>
+    </header>
+
+
+    <main class="compressor-page">
+
+        <!-- Tool Header -->
+        <section class="tool-hero-section">
+            <div class="container tool-hero-container">
+
+                <a href="../index.html#tools" class="back-link">
+                    ← Back to tools
+                </a>
+
+                <div class="tool-hero-badge">
+                    <span aria-hidden="true">↘</span>
+                    Image Compressor
+                </div>
+
+                <h1>Compress images without losing unnecessary quality</h1>
+
+                <p>
+                    Reduce JPG, PNG, and WebP file sizes directly in your
+                    browser. Your image stays on your device.
+                </p>
+
+            </div>
+        </section>
+
+
+        <!-- Compressor Workspace -->
+        <section class="compressor-workspace-section">
+            <div class="container">
+
+                <!-- Initial Upload State -->
+                <div
+                    class="compressor-upload-zone"
+                    id="compressorUploadZone"
+                    tabindex="0"
+                    role="button"
+                    aria-label="Upload an image to compress"
+                >
+                    <input
+                        type="file"
+                        id="compressorImageInput"
+                        accept="image/jpeg,image/png,image/webp"
+                        hidden
+                    >
+
+                    <div
+                        class="compressor-upload-icon"
+                        aria-hidden="true"
+                    >
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="38"
+                            height="38"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M12 16V4M12 4L7.5 8.5M12 4L16.5 8.5"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+
+                            <path
+                                d="M5 14V18C5 19.1046 5.89543 20 7 20H17C18.1046 20 19 19.1046 19 18V14"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                    </div>
+
+                    <h2>Choose an image to compress</h2>
+
+                    <p>
+                        Drag and drop an image here or
+                        <button
+                            type="button"
+                            class="browse-button"
+                            id="compressorBrowseButton"
+                        >
+                            browse files
+                        </button>
+                    </p>
+
+                    <span class="supported-formats">
+                        Supports JPG, PNG, and WebP up to 20 MB
+                    </span>
+
+                    <div class="privacy-message">
+                        <span aria-hidden="true">●</span>
+                        Processed locally in your browser
+                    </div>
+                </div>
+
+
+                <!-- Error Message -->
+                <div
+                    class="compressor-message compressor-error-message"
+                    id="compressorErrorMessage"
+                    role="alert"
+                    hidden
+                ></div>
+
+
+                <!-- Main Compressor Interface -->
+                <div
+                    class="compressor-interface"
+                    id="compressorInterface"
+                    hidden
+                >
+
+                    <!-- Image Information -->
+                    <section class="compressor-file-summary">
+                        <div class="compressor-file-thumbnail">
+                            <img
+                                src=""
+                                alt="Selected image preview"
+                                id="compressorThumbnail"
+                            >
+                        </div>
+
+                        <div class="compressor-file-details">
+                            <span class="compressor-file-label">
+                                Selected image
+                            </span>
+
+                            <strong id="compressorFileName"></strong>
+
+                            <span id="compressorFileMeta"></span>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="remove-file-button"
+                            id="compressorChangeImageButton"
+                        >
+                            Change image
+                        </button>
+                    </section>
+
+
+                    <div class="compressor-layout">
+
+                        <!-- Preview Panel -->
+                        <section class="compressor-preview-panel">
+
+                            <div class="compressor-panel-header">
+                                <div>
+                                    <span class="compressor-panel-eyebrow">
+                                        Preview
+                                    </span>
+
+                                    <h2>Image comparison</h2>
+                                </div>
+
+                                <span
+                                    class="compression-status"
+                                    id="compressionStatus"
+                                >
+                                    Ready
+                                </span>
+                            </div>
+
+
+                            <div class="comparison-grid">
+
+                                <article class="comparison-card">
+                                    <div class="comparison-card-header">
+                                        <span>Original</span>
+
+                                        <strong id="originalImageSize">
+                                            —
+                                        </strong>
+                                    </div>
+
+                                    <div class="comparison-image-wrapper">
+                                        <img
+                                            src=""
+                                            alt="Original image preview"
+                                            id="originalImagePreview"
+                                        >
+                                    </div>
+                                </article>
+
+
+                                <article class="comparison-card">
+                                    <div class="comparison-card-header">
+                                        <span>Compressed</span>
+
+                                        <strong id="compressedImageSize">
+                                            —
+                                        </strong>
+                                    </div>
+
+                                    <div class="comparison-image-wrapper">
+                                        <div
+                                            class="compressed-placeholder"
+                                            id="compressedPlaceholder"
+                                        >
+                                            <span aria-hidden="true">↘</span>
+                                            <p>
+                                                Your compressed preview will
+                                                appear here.
+                                            </p>
+                                        </div>
+
+                                        <img
+                                            src=""
+                                            alt="Compressed image preview"
+                                            id="compressedImagePreview"
+                                            hidden
+                                        >
+                                    </div>
+                                </article>
+
+                            </div>
+
+                        </section>
+
+
+                        <!-- Controls Panel -->
+                        <aside class="compressor-controls-panel">
+
+                            <div class="compressor-panel-header">
+                                <div>
+                                    <span class="compressor-panel-eyebrow">
+                                        Settings
+                                    </span>
+
+                                    <h2>Compression controls</h2>
+                                </div>
+                            </div>
+
+
+                            <!-- Quality -->
+                            <div class="compressor-control-group">
+                                <div class="compressor-control-heading">
+                                    <label for="qualityRange">
+                                        Image quality
+                                    </label>
+
+                                    <output
+                                        for="qualityRange"
+                                        id="qualityValue"
+                                    >
+                                        80%
+                                    </output>
+                                </div>
+
+                                <input
+                                    type="range"
+                                    id="qualityRange"
+                                    min="10"
+                                    max="100"
+                                    value="80"
+                                    step="5"
+                                >
+
+                                <div class="range-labels">
+                                    <span>Smaller file</span>
+                                    <span>Higher quality</span>
+                                </div>
+                            </div>
+
+
+                            <!-- Output Format -->
+                            <div class="compressor-control-group">
+                                <label for="outputFormat">
+                                    Output format
+                                </label>
+
+                                <select id="outputFormat">
+                                    <option value="original">
+                                        Keep original format
+                                    </option>
+
+                                    <option value="image/jpeg">
+                                        JPG
+                                    </option>
+
+                                    <option value="image/png">
+                                        PNG
+                                    </option>
+
+                                    <option value="image/webp">
+                                        WebP
+                                    </option>
+                                </select>
+                            </div>
+
+
+                            <!-- Statistics -->
+                            <div class="compression-statistics">
+
+                                <div class="compression-stat-card">
+                                    <span>Original size</span>
+                                    <strong id="originalStatSize">—</strong>
+                                </div>
+
+                                <div class="compression-stat-card">
+                                    <span>Compressed size</span>
+                                    <strong id="compressedStatSize">—</strong>
+                                </div>
+
+                                <div class="compression-stat-card">
+                                    <span>Space saved</span>
+                                    <strong id="spaceSavedValue">—</strong>
+                                </div>
+
+                                <div class="compression-stat-card">
+                                    <span>Dimensions</span>
+                                    <strong id="imageDimensions">—</strong>
+                                </div>
+
+                            </div>
+
+
+                            <!-- Actions -->
+                            <div class="compressor-actions">
+
+                                <button
+                                    type="button"
+                                    class="button button-primary"
+                                    id="compressButton"
+                                >
+                                    Compress image
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="button button-secondary"
+                                    id="downloadCompressedButton"
+                                    disabled
+                                >
+                                    Download result
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="compressor-reset-button"
+                                    id="resetCompressorButton"
+                                >
+                                    Reset compressor
+                                </button>
+
+                            </div>
+
+                        </aside>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- Privacy Note -->
+        <section class="compressor-privacy-section">
+            <div class="container">
+
+                <div class="compressor-privacy-card">
+
+                    <div
+                        class="compressor-privacy-icon"
+                        aria-hidden="true"
+                    >
+                        ✓
+                    </div>
+
+                    <div>
+                        <h2>Your image stays private</h2>
+
+                        <p>
+                            Compression happens inside your browser. Images are
+                            not sent to an ImageTools server.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+
+    <footer class="site-footer">
+        <div class="container footer-container">
+
+            <a href="../index.html" class="brand footer-brand">
+                <span class="brand-icon" aria-hidden="true">◈</span>
+                <span class="brand-name">ImageTools</span>
+            </a>
+
+            <p>
+                Fast and private image utilities for everyday use.
+            </p>
+
+            <div class="footer-links">
+                <a href="../index.html#tools">Tools</a>
+                <a href="../index.html#privacy">Privacy</a>
+
+                <a
+                    href="https://github.com/DileepKumar52/ImageTools"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    GitHub
+                </a>
+            </div>
+
+            <span class="copyright">
+                © <span id="currentYear">2026</span> ImageTools
+            </span>
+
+        </div>
+    </footer>
+
+</body>
+</html>

@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Compress JPG, PNG, and WebP images directly in your browser with ImageTools."
+    >
+
+    <title>Image Metadata Viewer | ImageTools</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <script src="../js/metadata.js" defer></script>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container header-container">
+
+            <a
+                href="../index.html"
+                class="brand"
+                aria-label="ImageTools homepage"
+            >
+                <span class="brand-icon" aria-hidden="true">◈</span>
+                <span class="brand-name">ImageTools</span>
+            </a>
+
+            <nav class="desktop-navigation" aria-label="Main navigation">
+                <a href="../index.html#tools">Tools</a>
+                <a href="../index.html#features">Features</a>
+                <a href="../index.html#privacy">Privacy</a>
+
+                <a
+                    href="https://github.com/DileepKumar52/ImageTools"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    GitHub
+                </a>
+            </nav>
+
+            <div class="header-actions">
+                <button
+                    type="button"
+                    class="theme-toggle"
+                    id="themeToggle"
+                    aria-label="Switch theme"
+                    title="Switch theme"
+                >
+                    <span id="themeIcon" aria-hidden="true">☾</span>
+                </button>
+
+                <button
+                    type="button"
+                    class="mobile-menu-button"
+                    id="mobileMenuButton"
+                    aria-label="Open navigation menu"
+                    aria-expanded="false"
+                    aria-controls="mobileNavigation"
+                >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+
+        </div>
+
+        <nav
+            class="mobile-navigation"
+            id="mobileNavigation"
+            aria-label="Mobile navigation"
+        >
+            <a href="../index.html#tools">Tools</a>
+            <a href="../index.html#features">Features</a>
+            <a href="../index.html#privacy">Privacy</a>
+
+            <a
+                href="https://github.com/DileepKumar52/ImageTools"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                GitHub
+            </a>
+        </nav>
+    </header>
+
+
+    <main class="converter-page">
+
+        <!-- Tool Header -->
+        <section class="tool-hero-section">
+            <div class="container tool-hero-container">
+
+                <a href="../index.html#tools" class="back-link">
+                    ← Back to tools
+                </a>
+
+                <div class="tool-hero-badge">
+                    <span aria-hidden="true">↘</span>
+                    Metadata Viewer
+                </div>
+
+                <h1>View image metadata instantly</h1>
+
+                <p>
+                    Inspect image details, EXIF information and file properties directly inside your browser. Nothing is uploaded.
+                </p>
+
+            </div>
+        </section>
+
+
+        <!-- Converter Workspace -->
+        <section class="compressor-workspace-section">
+            <div class="container">
+
+                <!-- Initial Upload State -->
+                <div
+                    class="compressor-upload-zone"
+                    id="metadataUploadZone"
+                    tabindex="0"
+                    role="button"
+                    aria-label="Upload an image to inspect"
+                >
+                    <input
+                        type="file"
+                        id="metadataImageInput"
+                        accept="image/jpeg,image/png,image/webp"
+                        hidden
+                    >
+
+                    <div
+                        class="compressor-upload-icon"
+                        aria-hidden="true"
+                    >
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="38"
+                            height="38"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M12 16V4M12 4L7.5 8.5M12 4L16.5 8.5"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+
+                            <path
+                                d="M5 14V18C5 19.1046 5.89543 20 7 20H17C18.1046 20 19 19.1046 19 18V14"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                    </div>
+
+                    <h2>Choose an image to inspect</h2>
+
+                    <p>
+                        Drag and drop an image here or
+                        <button
+                            type="button"
+                            class="browse-button"
+                            id="metadataBrowseButton"
+                        >
+                            browse files
+                        </button>
+                        to inspect its metadata.
+                    </p>
+
+                    <span class="supported-formats">
+                        Supports JPG, PNG, and WebP up to 20 MB
+                    </span>
+
+                    <div class="privacy-message">
+                        <span aria-hidden="true">●</span>
+                        Processed locally in your browser
+                    </div>
+                </div>
+
+
+                <!-- Error Message -->
+                <div
+                    class="compressor-message compressor-error-message"
+                    id="metadataErrorMessage"
+                    role="alert"
+                    hidden
+                ></div>
+
+
+                <!-- Main Converter Interface -->
+                <div
+                    class="compressor-interface"
+                    id="metadataInterface"
+                    hidden
+                >
+
+                    <!-- Image Information -->
+                    <section class="compressor-file-summary">
+                        <div class="compressor-file-thumbnail">
+                            <img
+                                src=""
+                                alt="Selected image preview"
+                                id="metadataThumbnail"
+                            >
+                        </div>
+
+                        <div class="compressor-file-details">
+                            <span class="compressor-file-label">
+                                Selected image
+                            </span>
+
+                            <strong id="metadataFileName"></strong>
+
+                            <span id="metadataFileMeta"></span>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="remove-file-button"
+                            id="metadataChangeImageButton"
+                        >
+                            Change image
+                        </button>
+                    </section>
+
+
+                    <div class="compressor-layout">
+
+                        <!-- Preview Panel -->
+                        <section class="compressor-preview-panel">
+
+                            <div class="compressor-panel-header">
+                                <div>
+                                    <span class="compressor-panel-eyebrow">
+                                        Preview
+                                    </span>
+
+                                    <h2>Image preview</h2>
+                                </div>
+
+                                <span
+                                    class="compression-status"
+                                    id="metadataStatus"
+                                >
+                                    Ready
+                                </span>
+                            </div>
+
+
+                            <div class="comparison-grid">
+
+                                <article class="comparison-card">
+                                    <div class="comparison-card-header">
+                                        <span>Original</span>
+
+                                        <strong id="originalImageSize">
+                                            —
+                                        </strong>
+                                    </div>
+
+                                    <div class="comparison-image-wrapper">
+                                        <img
+                                            src=""
+                                            alt="Original image preview"
+                                            id="originalImagePreview"
+                                        >
+                                    </div>
+                                </article>
+
+
+                                <article class="comparison-card">
+                                    <div class="comparison-card-header">
+                                        <span>Metadata</span>
+
+                                        <strong id="metadataImageSize">
+                                            —
+                                        </strong>
+                                    </div>
+
+                                    <div class="comparison-image-wrapper">
+                                        <div
+                                            class="compressed-placeholder"
+                                            id="metadataPlaceholder"
+                                        >
+                                            <span aria-hidden="true">↘</span>
+                                            <p>
+                                                Image metadata will appear here.
+                                            </p>
+                                        </div>
+
+                                        <img
+                                            src=""
+                                            alt="Metadata preview"
+                                            id="metadataImagePreview"
+                                            hidden
+                                        >
+                                    </div>
+                                </article>
+
+                            </div>
+
+                        </section>
+
+
+                        <!-- Resizer Controls -->
+                        <aside class="compressor-controls-panel">
+
+                            <div class="compressor-panel-header">
+                                <div>
+                                    <span class="compressor-panel-eyebrow">
+                                        Settings
+                                    </span>
+
+                                    <h2>Resize settings</h2>
+                                </div>
+                            </div>
+
+                            <!-- Metadata Information -->
+
+                            <div class="metadata-section">
+
+                                <div class="compressor-control-group">
+
+                                    <label>Basic Information</label>
+
+                                    <div id="basicMetadata"></div>
+
+                                </div>
+
+                                <div class="compressor-control-group">
+
+                                    <label>EXIF Information</label>
+
+                                    <div id="exifMetadata">
+
+                                        No EXIF data loaded.
+
+                                    </div>
+
+                                </div>
+
+                                <div class="compressor-control-group">
+
+                                    <label>Camera Details</label>
+
+                                    <div id="cameraMetadata">
+
+                                        Camera information will appear here.
+
+                                    </div>
+
+                                </div>
+
+                                <div class="compressor-control-group">
+
+                                    <label>Location</label>         
+
+                                    <div id="gpsMetadata">
+
+                                        No GPS information.
+
+                                    </div>
+
+                                </div>
+
+                                <div class="compressor-control-group">
+                                    <label for="metadataReportFormat">
+                                        Report format
+                                    </label>
+
+                                    <select id="metadataReportFormat">
+                                        <option value="json">
+                                            JSON Report
+                                        </option>
+
+                                        <option value="txt">
+                                            Text Report
+                                        </option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+
+                            <!-- Statistics -->
+                            <div class="compression-statistics">
+
+                                <div class="compression-stat-card">
+                                    <span>Original size</span>
+                                    <strong id="originalStatSize">—</strong>
+                                </div>
+
+                                <div class="compression-stat-card">
+                                    <span>Image size</span>
+                                    <strong id="imageStatSize">—</strong>
+                                </div>
+
+                                <div class="compression-stat-card">
+                                    <span>File type</span>
+                                    <strong id="fileTypeValue">—</strong>
+                                </div>
+
+                                <div class="compression-stat-card">
+                                    <span>Resolution</span>
+                                    <strong id="resolutionValue">—</strong>
+                                </div>
+
+                            </div>
+
+
+                            <!-- Actions -->
+                            <div class="compressor-actions">
+
+                                <button
+                                    type="button"
+                                    class="button button-primary"
+                                    id="analyzeMetadataButton"
+                                >
+                                    Analyze Metadata
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="button button-secondary"
+                                    id="downloadMetadataButton"
+                                    disabled
+                                >
+                                    Export Report
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="compressor-reset-button"
+                                    id="resetMetadataButton"
+                                >
+                                    Reset
+                                </button>
+
+                            </div>
+
+                        </aside>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- Privacy Note -->
+        <section class="compressor-privacy-section">
+            <div class="container">
+
+                <div class="compressor-privacy-card">
+
+                    <div
+                        class="compressor-privacy-icon"
+                        aria-hidden="true"
+                    >
+                        ✓
+                    </div>
+
+                    <div>
+                        <h2>Your image stays private</h2>
+
+                        <p>
+                            Image metadata is analyzed locally inside your browser. Your files never leave your device.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+
+    <footer class="site-footer">
+        <div class="container footer-container">
+
+            <a href="../index.html" class="brand footer-brand">
+                <span class="brand-icon" aria-hidden="true">◈</span>
+                <span class="brand-name">ImageTools</span>
+            </a>
+
+            <p>
+                Fast and private image utilities for everyday use.
+            </p>
+
+            <div class="footer-links">
+                <a href="../index.html#tools">Tools</a>
+                <a href="../index.html#privacy">Privacy</a>
+
+                <a
+                    href="https://github.com/DileepKumar52/ImageTools"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    GitHub
+                </a>
+            </div>
+
+            <span class="copyright">
+                © <span id="currentYear">2026</span> ImageTools
+            </span>
+
+        </div>
+    </footer>
+
+</body>
+</html>

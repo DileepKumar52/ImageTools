@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <meta
+        name="description"
+        content="Compress JPG, PNG, and WebP images directly in your browser with ImageTools."
+    >
+
+    <title>Image Resizer | ImageTools</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <script src="../js/resizer.js" defer></script>
+</head>
+
+<body>
+
+    <!-- Header -->
+    <header class="site-header">
+        <div class="container header-container">
+
+            <a
+                href="../index.html"
+                class="brand"
+                aria-label="ImageTools homepage"
+            >
+                <span class="brand-icon" aria-hidden="true">◈</span>
+                <span class="brand-name">ImageTools</span>
+            </a>
+
+            <nav class="desktop-navigation" aria-label="Main navigation">
+                <a href="../index.html#tools">Tools</a>
+                <a href="../index.html#features">Features</a>
+                <a href="../index.html#privacy">Privacy</a>
+
+                <a
+                    href="https://github.com/DileepKumar52/ImageTools"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    GitHub
+                </a>
+            </nav>
+
+            <div class="header-actions">
+                <button
+                    type="button"
+                    class="theme-toggle"
+                    id="themeToggle"
+                    aria-label="Switch theme"
+                    title="Switch theme"
+                >
+                    <span id="themeIcon" aria-hidden="true">☾</span>
+                </button>
+
+                <button
+                    type="button"
+                    class="mobile-menu-button"
+                    id="mobileMenuButton"
+                    aria-label="Open navigation menu"
+                    aria-expanded="false"
+                    aria-controls="mobileNavigation"
+                >
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+
+        </div>
+
+        <nav
+            class="mobile-navigation"
+            id="mobileNavigation"
+            aria-label="Mobile navigation"
+        >
+            <a href="../index.html#tools">Tools</a>
+            <a href="../index.html#features">Features</a>
+            <a href="../index.html#privacy">Privacy</a>
+
+            <a
+                href="https://github.com/DileepKumar52/ImageTools"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                GitHub
+            </a>
+        </nav>
+    </header>
+
+
+    <main class="converter-page">
+
+        <!-- Tool Header -->
+        <section class="tool-hero-section">
+            <div class="container tool-hero-container">
+
+                <a href="../index.html#tools" class="back-link">
+                    ← Back to tools
+                </a>
+
+                <div class="tool-hero-badge">
+                    <span aria-hidden="true">↘</span>
+                    Image Resizer
+                </div>
+
+                <h1>Resize images without losing quality</h1>
+
+                <p>
+                    Resize JPG, PNG and WebP images directly in your browser. Change dimensions, keep aspect ratio and download instantly.
+                </p>
+
+            </div>
+        </section>
+
+
+        <!-- Converter Workspace -->
+        <section class="compressor-workspace-section">
+            <div class="container">
+
+                <!-- Initial Upload State -->
+                <div
+                    class="compressor-upload-zone"
+                    id="resizerUploadZone"
+                    tabindex="0"
+                    role="button"
+                    aria-label="Upload an image to resize"
+                >
+                    <input
+                        type="file"
+                        id="resizerImageInput"
+                        accept="image/jpeg,image/png,image/webp"
+                        hidden
+                    >
+
+                    <div
+                        class="compressor-upload-icon"
+                        aria-hidden="true"
+                    >
+                        <svg
+                            viewBox="0 0 24 24"
+                            width="38"
+                            height="38"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M12 16V4M12 4L7.5 8.5M12 4L16.5 8.5"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+
+                            <path
+                                d="M5 14V18C5 19.1046 5.89543 20 7 20H17C18.1046 20 19 19.1046 19 18V14"
+                                stroke="currentColor"
+                                stroke-width="1.8"
+                                stroke-linecap="round"
+                            />
+                        </svg>
+                    </div>
+
+                    <h2>Choose an image to resize</h2>
+
+                    <p>
+                        Drag and drop an image here or
+                        <button
+                            type="button"
+                            class="browse-button"
+                            id="resizerBrowseButton"
+                        >
+                            browse files
+                        </button>
+                        to resize.
+                    </p>
+
+                    <span class="supported-formats">
+                        Supports JPG, PNG, and WebP up to 20 MB
+                    </span>
+
+                    <div class="privacy-message">
+                        <span aria-hidden="true">●</span>
+                        Processed locally in your browser
+                    </div>
+                </div>
+
+
+                <!-- Error Message -->
+                <div
+                    class="compressor-message compressor-error-message"
+                    id="resizerErrorMessage"
+                    role="alert"
+                    hidden
+                ></div>
+
+
+                <!-- Main Converter Interface -->
+                <div
+                    class="compressor-interface"
+                    id="resizerInterface"
+                    hidden
+                >
+
+                    <!-- Image Information -->
+                    <section class="compressor-file-summary">
+                        <div class="compressor-file-thumbnail">
+                            <img
+                                src=""
+                                alt="Selected image preview"
+                                id="resizerThumbnail"
+                            >
+                        </div>
+
+                        <div class="compressor-file-details">
+                            <span class="compressor-file-label">
+                                Selected image
+                            </span>
+
+                            <strong id="resizerFileName"></strong>
+
+                            <span id="resizerFileMeta"></span>
+                        </div>
+
+                        <button
+                            type="button"
+                            class="remove-file-button"
+                            id="resizerChangeImageButton"
+                        >
+                            Change image
+                        </button>
+                    </section>
+
+
+                    <div class="compressor-layout">
+
+                        <!-- Preview Panel -->
+                        <section class="compressor-preview-panel">
+
+                            <div class="compressor-panel-header">
+                                <div>
+                                    <span class="compressor-panel-eyebrow">
+                                        Preview
+                                    </span>
+
+                                    <h2>Resize preview</h2>
+                                </div>
+
+                                <span
+                                    class="compression-status"
+                                    id="resizeStatus"
+                                >
+                                    Ready
+                                </span>
+                            </div>
+
+
+                            <div class="comparison-grid">
+
+                                <article class="comparison-card">
+                                    <div class="comparison-card-header">
+                                        <span>Original</span>
+
+                                        <strong id="originalImageSize">
+                                            —
+                                        </strong>
+                                    </div>
+
+                                    <div class="comparison-image-wrapper">
+                                        <img
+                                            src=""
+                                            alt="Original image preview"
+                                            id="originalImagePreview"
+                                        >
+                                    </div>
+                                </article>
+
+
+                                <article class="comparison-card">
+                                    <div class="comparison-card-header">
+                                        <span>Resized</span>
+
+                                        <strong id="resizedImageSize">
+                                            —
+                                        </strong>
+                                    </div>
+
+                                    <div class="comparison-image-wrapper">
+                                        <div
+                                            class="compressed-placeholder"
+                                            id="resizedPlaceholder"
+                                        >
+                                            <span aria-hidden="true">↘</span>
+                                            <p>
+                                                Your Resized image will appear here.
+                                            </p>
+                                        </div>
+
+                                        <img
+                                            src=""
+                                            alt="Converted image preview"
+                                            id="resizedImagePreview"
+                                            hidden
+                                        >
+                                    </div>
+                                </article>
+
+                            </div>
+
+                        </section>
+
+
+                        <!-- Resizer Controls -->
+                        <aside class="compressor-controls-panel">
+
+                            <div class="compressor-panel-header">
+                                <div>
+                                    <span class="compressor-panel-eyebrow">
+                                        Settings
+                                    </span>
+
+                                    <h2>Resize settings</h2>
+                                </div>
+                            </div>
+
+                            <!-- Resize Mode -->
+                            <div class="compressor-control-group">
+                                <label for="resizeMode">
+                                    Resize by
+                                </label>
+
+                                <select id="resizeMode">
+                                    <option value="pixels" selected>
+                                        Pixels
+                                    </option>
+
+                                    <option value="percentage">
+                                        Percentage
+                                    </option>
+                                </select>
+                            </div>
+
+                            <!-- Pixel Controls -->
+                            <div id="pixelResizeControls">
+
+                                <div class="resize-dimensions-grid">
+
+                                    <div class="compressor-control-group">
+                                        <label for="resizeWidth">
+                                            Width
+                                        </label>
+
+                                        <div class="resize-input-wrapper">
+                                            <input
+                                                type="number"
+                                                id="resizeWidth"
+                                                min="1"
+                                                step="1"
+                                                placeholder="Width"
+                                            >
+
+                                            <span>px</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="compressor-control-group">
+                                        <label for="resizeHeight">
+                                            Height
+                                        </label>
+
+                                        <div class="resize-input-wrapper">
+                                            <input
+                                                type="number"
+                                                id="resizeHeight"
+                                                min="1"
+                                                step="1"
+                                                placeholder="Height"
+                                            >
+
+                                            <span>px</span>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <label class="resize-lock-control">
+                                    <input
+                                        type="checkbox"
+                                        id="lockAspectRatio"
+                                        checked
+                                    >
+
+                                    <span>
+                                        Lock aspect ratio
+                                    </span>
+                                </label>
+
+                            </div>
+
+                            <!-- Percentage Controls -->
+                            <div
+                                id="percentageResizeControls"
+                                hidden
+                            >
+                                <div class="compressor-control-group">
+                                    <label for="resizePercentage">
+                                        Resize percentage
+                                    </label>
+
+                                    <div class="resize-input-wrapper">
+                                        <input
+                                            type="number"
+                                            id="resizePercentage"
+                                            min="1"
+                                            max="500"
+                                            step="1"
+                                            value="100"
+                                        >
+
+                                        <span>%</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Preset Sizes -->
+                            <div class="compressor-control-group">
+                                <label for="resizePreset">
+                                    Preset size
+                                </label>
+
+                                <select id="resizePreset">
+                                    <option value="" selected>
+                                        Custom size
+                                    </option>
+
+                                    <option value="original">
+                                        Original dimensions
+                                    </option>
+
+                                    <option value="1080x1080">
+                                        Instagram Post — 1080 × 1080
+                                    </option>
+
+                                    <option value="1080x1920">
+                                        Instagram Story — 1080 × 1920
+                                    </option>
+
+                                    <option value="1280x720">
+                                        YouTube Thumbnail — 1280 × 720
+                                    </option>
+
+                                    <option value="1920x1080">
+                                        Full HD — 1920 × 1080
+                                    </option>
+
+                                    <option value="512x512">
+                                        Profile Picture — 512 × 512
+                                    </option>
+                                </select>
+                            </div>
+
+                            <!-- Output Format -->
+                            <div class="compressor-control-group">
+                                <label for="resizeOutputFormat">
+                                    Output format
+                                </label>
+
+                                <select id="resizeOutputFormat">
+                                    <option value="original" selected>
+                                        Keep original format
+                                    </option>
+
+                                    <option value="image/jpeg">
+                                        JPG
+                                    </option>
+
+                                    <option value="image/png">
+                                        PNG
+                                    </option>
+
+                                    <option value="image/webp">
+                                        WebP
+                                    </option>
+                                </select>
+                            </div>
+
+
+                            <!-- Statistics -->
+                            <div class="compression-statistics">
+
+                                <div class="compression-stat-card">
+                                    <span>Original size</span>
+                                    <strong id="originalStatSize">—</strong>
+                                </div>
+
+                                <div class="compression-stat-card">
+                                    <span>Resized size</span>
+                                    <strong id="resizedStatSize">—</strong>
+                                </div>
+
+                                <div class="compression-stat-card">
+                                    <span>Size difference</span>
+                                    <strong id="sizeDifferenceValue">—</strong>
+                                </div>
+
+                                <div class="compression-stat-card">
+                                    <span>Dimensions</span>
+                                    <strong id="imageDimensions">—</strong>
+                                </div>
+
+                            </div>
+
+
+                            <!-- Actions -->
+                            <div class="compressor-actions">
+
+                                <button
+                                    type="button"
+                                    class="button button-primary"
+                                    id="resizeButton"
+                                >
+                                    Resize image
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="button button-secondary"
+                                    id="downloadResizedButton"
+                                    disabled
+                                >
+                                    Download image
+                                </button>
+
+                                <button
+                                    type="button"
+                                    class="compressor-reset-button"
+                                    id="resetResizerButton"
+                                >
+                                    Reset resizer
+                                </button>
+
+                            </div>
+
+                        </aside>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+
+        <!-- Privacy Note -->
+        <section class="compressor-privacy-section">
+            <div class="container">
+
+                <div class="compressor-privacy-card">
+
+                    <div
+                        class="compressor-privacy-icon"
+                        aria-hidden="true"
+                    >
+                        ✓
+                    </div>
+
+                    <div>
+                        <h2>Your image stays private</h2>
+
+                        <p>
+                            Image resizing happens inside your browser. Your files never leave your device.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+
+    <footer class="site-footer">
+        <div class="container footer-container">
+
+            <a href="../index.html" class="brand footer-brand">
+                <span class="brand-icon" aria-hidden="true">◈</span>
+                <span class="brand-name">ImageTools</span>
+            </a>
+
+            <p>
+                Fast and private image utilities for everyday use.
+            </p>
+
+            <div class="footer-links">
+                <a href="../index.html#tools">Tools</a>
+                <a href="../index.html#privacy">Privacy</a>
+
+                <a
+                    href="https://github.com/DileepKumar52/ImageTools"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    GitHub
+                </a>
+            </div>
+
+            <span class="copyright">
+                © <span id="currentYear">2026</span> ImageTools
+            </span>
+
+        </div>
+    </footer>
+
+</body>
+</html>
